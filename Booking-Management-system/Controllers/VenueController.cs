@@ -1,6 +1,10 @@
 ﻿using Booking_Management_system.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.IO;
+using Azure.Storage.Blobs;
 
 namespace Booking_Management_system.Controllers
 {
@@ -30,11 +34,21 @@ namespace Booking_Management_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Venue.Add(venue);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(venue);
+           
+               
+                    if (venue.ImageFile != null)
+                    {
+                        var blobUrl = await UploadImageToBlobAsync(venue.ImageFile);
+
+                        venue.IMAGE_URL = blobUrl;
+                    }
+
+                    _context.Venue.Add(venue);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = "Venue created successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(venue);
         }
 
         public IActionResult Edit(int id)
@@ -60,6 +74,15 @@ namespace Booking_Management_system.Controllers
             {
                 try
                 {
+                    if (venue.ImageFile != null)
+                    {
+                        var blobUrl = await UploadImageToBlobAsync(venue.ImageFile);
+                        venue.IMAGE_URL = blobUrl;
+                    }
+                    else
+                    {
+
+                    }
                     _context.Update(venue);
                     await _context.SaveChangesAsync();
                 }
@@ -111,5 +134,32 @@ namespace Booking_Management_system.Controllers
             }
             return View(venue);
         }
+
+        private async Task<string> UploadImageToBlobAsync(IFormFile file)
+        {
+            var connectionString = "DefaultEndpointsProtocol=https;AccountName=storagesolutions;AccountKey=..."; // truncated for security
+            var containerName = "storagesolutions";
+
+            var blobServiceClient = new BlobServiceClient(connectionString);
+            var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+            var blobClient = containerClient.GetBlobClient(Guid.NewGuid() + Path.GetExtension(file.FileName));
+
+            var blobHttpHeaders = new Azure.Storage.Blobs.Models.BlobHttpHeaders
+            {
+                ContentType = file.ContentType
+            };
+
+            using (var stream = file.OpenReadStream())
+            {
+                await blobClient.UploadAsync(stream, new Azure.Storage.Blobs.Models.BlobUploadOptions
+                {
+                    HttpHeaders = blobHttpHeaders
+                });
+            }
+
+            return blobClient.Uri.ToString();
+        }
+
     }
 }
+

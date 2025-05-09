@@ -42,7 +42,17 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IMAGE_URL)
-                </td>               
+                </td>
+
+                <td>
+                    @if (!string.IsNullOrEmpty(item.IMAGE_URL))
+                    {
+                        <img src="@item.IMAGE_URL" alt="Venue Image" width="150" height="150" style="object-fit:cover; border-radius: 8px;" />
+                    }
+                    else
+                    {
+                        <span>No Image Available</span>
+                    }
                 <td>
                     <a class="btn btn-sm btn-success" href="@Url.Action("Details", new { id = item.VENUE_ID })">Details</a> |
                     <a class="btn btn-sm btn-warning" href="@Url.Action("Edit", new { id = item.VENUE_ID })">Edit</a> |

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Booking_Management_system.Models
 {
@@ -25,6 +26,9 @@ namespace Booking_Management_system.Models
         [StringLength(500)]
         [Display(Name = "Image URL")]
         public string? IMAGE_URL { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; } // For file upload
 
         // Navigation Property - A Venue can have multiple Events
         public virtual ICollection<Event> Events { get; set; } = new List<Event>();

@@ -679,3 +679,6 @@ C:\Users\lab_services_student\Desktop\github stuff\EventEase_ManagementSystem_ST
 C:\Users\lab_services_student\Desktop\github stuff\EventEase_ManagementSystem_ST10445830\Booking-Management-system\obj\Debug\net9.0\Booking-Management-system.pdb
 C:\Users\lab_services_student\Desktop\github stuff\EventEase_ManagementSystem_ST10445830\Booking-Management-system\obj\Debug\net9.0\Booking-Management-system.genruntimeconfig.cache
 C:\Users\lab_services_student\Desktop\github stuff\EventEase_ManagementSystem_ST10445830\Booking-Management-system\obj\Debug\net9.0\ref\Booking-Management-system.dll
+C:\Users\lab_services_student\Desktop\github stuff\EventEase_ManagementSystem_ST10445830\Booking-Management-system\bin\Debug\net9.0\Azure.Storage.Blobs.dll
+C:\Users\lab_services_student\Desktop\github stuff\EventEase_ManagementSystem_ST10445830\Booking-Management-system\bin\Debug\net9.0\Azure.Storage.Common.dll
+C:\Users\lab_services_student\Desktop\github stuff\EventEase_ManagementSystem_ST10445830\Booking-Management-system\bin\Debug\net9.0\System.IO.Hashing.dll
