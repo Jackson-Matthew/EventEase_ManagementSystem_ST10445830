@@ -11,6 +11,7 @@ namespace Booking_Management_system.Models
 
         [Required]
         [Display(Name = "Booking date")]
+        [DataType(DataType.DateTime)]
         public DateTime BOOKING_DATE { get; set; }
 
         [Required]
